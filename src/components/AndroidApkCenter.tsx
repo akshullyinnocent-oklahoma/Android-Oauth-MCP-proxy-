@@ -280,11 +280,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Set up Java JDK 17
+      - name: Set up Java JDK 21 (LTS)
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - run: npm install --legacy-peer-deps
       - run: npm run build
       - name: Initialize Capacitor Android
@@ -340,7 +340,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
       - uses: actions/setup-java@v4
-        with: { distribution: 'temurin', java-version: '17' }
+        with: { distribution: 'temurin', java-version: '21' }
       - run: npm install --legacy-peer-deps
       - run: npm run build
       - run: npx cap sync android
