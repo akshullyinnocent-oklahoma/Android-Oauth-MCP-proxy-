@@ -1,0 +1,10 @@
+{
+  "appId": "com.mcpproxy.app",
+  "appName": "OAuth MCP Proxy",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true,
+    "allowNavigation": ["*"]
+  }
+}

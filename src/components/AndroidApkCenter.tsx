@@ -274,23 +274,30 @@ jobs:
     name: Build & Sign Android Debug APK
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-          cache: 'gradle'
-      - uses: actions/setup-node@v4
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci || npm install
-      - run: npm install --save-dev @capacitor/core @capacitor/android @capacitor/cli
+      - name: Set up Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - run: npm install
       - run: npm run build
-      - run: |
+      - name: Initialize Capacitor Android
+        run: |
           if [ ! -d "android" ]; then npx cap add android; fi
           npx cap sync android
-      - run: |
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          build-root-directory: android
+      - name: Build Android Debug APK
+        run: |
           cd android && chmod +x gradlew
           ./gradlew assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
@@ -331,13 +338,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with: { distribution: 'temurin', java-version: '17', cache: 'gradle' }
       - uses: actions/setup-node@v4
         with: { node-version: '20', cache: 'npm' }
-      - run: npm ci || npm install
+      - uses: actions/setup-java@v4
+        with: { distribution: 'temurin', java-version: '17' }
+      - run: npm install
       - run: npm run build
       - run: npx cap sync android
+      - uses: gradle/actions/setup-gradle@v3
+        with: { build-root-directory: android }
       - run: cd android && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
