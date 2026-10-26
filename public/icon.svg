@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle with safe padding -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+
+  <!-- Outer Pulse Glow -->
+  <circle cx="256" cy="256" r="160" fill="none" stroke="url(#glowGrad)" stroke-width="4" opacity="0.3" stroke-dasharray="12 12" />
+
+  <!-- MCP Center Node Hub -->
+  <circle cx="256" cy="256" r="92" fill="#0f172a" stroke="url(#glowGrad)" stroke-width="8" filter="url(#glow)" />
+
+  <!-- MCP Satellite Nodes -->
+  <!-- Node 1: OAuth Key -->
+  <circle cx="140" cy="160" r="34" fill="#1e293b" stroke="#38bdf8" stroke-width="5" />
+  <path d="M130 160h20m-10-10v20" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" />
+
+  <!-- Node 2: Local Proxy Server / Android -->
+  <circle cx="372" cy="160" r="34" fill="#1e293b" stroke="#10b981" stroke-width="5" />
+  <rect x="360" y="150" width="24" height="20" rx="4" fill="none" stroke="#10b981" stroke-width="3.5" />
+  <circle cx="372" cy="164" r="2" fill="#10b981" />
+
+  <!-- Node 3: Tools / Client Apps -->
+  <circle cx="256" cy="400" r="34" fill="#1e293b" stroke="#f59e0b" stroke-width="5" />
+  <path d="M246 392l10 16 10-16" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Connection lines with data flow dots -->
+  <line x1="165" y1="180" x2="200" y2="210" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" />
+  <line x1="347" y1="180" x2="312" y2="210" stroke="#10b981" stroke-width="5" stroke-linecap="round" />
+  <line x1="256" y1="366" x2="256" y2="348" stroke="#f59e0b" stroke-width="5" stroke-linecap="round" />
+
+  <!-- Center Shield & Keyhole (OAuth Proxy Core) -->
+  <path d="M256 200c-26 0-42 12-42 34 0 38 42 66 42 66s42-28 42-66c0-22-16-34-42-34z" fill="url(#shieldGrad)" />
+  <circle cx="256" cy="236" r="8" fill="#ffffff" />
+  <path d="M253 238l-4 22h14l-4-22z" fill="#ffffff" />
+</svg>

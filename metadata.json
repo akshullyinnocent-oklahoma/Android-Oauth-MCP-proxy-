@@ -1,0 +1,6 @@
+{
+  "name": "OAuth MCP Proxy (Android)",
+  "description": "Connect remote OAuth-secured MCP servers, authenticate with OAuth 2.0 / PKCE, and expose a local proxy endpoint for Claude Desktop, Cursor, and Android client apps to access MCP tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
