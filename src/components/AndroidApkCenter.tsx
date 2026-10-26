@@ -238,6 +238,114 @@ cd android && ./gradlew assembleDebug`;
         </div>
       </div>
 
+      {/* GitHub Actions CI Card: .github/workflows/build-apk.yml */}
+      <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-emerald-950 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-800">
+              CI
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="text-sm font-bold text-white">GitHub Actions CI: Build & Sign Debug APK</h4>
+                <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                  .github/workflows/build-apk.yml
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400">
+                Pushes to GitHub automatically trigger CI that builds, signs with default debug key, and uploads the APK artifact
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() =>
+              copyToClipboard(
+                `name: Build Android Debug APK
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    name: Build & Sign Android Debug APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci || npm install
+      - run: npm install --save-dev @capacitor/core @capacitor/android @capacitor/cli
+      - run: npm run build
+      - run: |
+          if [ ! -d "android" ]; then npx cap add android; fi
+          npx cap sync android
+      - run: |
+          cd android && chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oauth-mcp-proxy-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          retention-days: 30`,
+                'gh_actions'
+              )
+            }
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700 transition"
+          >
+            {copiedKey === 'gh_actions' ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-emerald-400">Copied Workflow</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-3.5 h-3.5 text-slate-400" />
+                <span>Copy Workflow YAML</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        <p className="text-xs text-slate-300">
+          When this repository is pushed to GitHub, GitHub Actions runs on an Ubuntu runner, builds your React + Tailwind web bundle, initializes the Capacitor Android project, builds the Gradle package, signs it with the standard Android debug keystore, and attaches the downloadable <code className="text-emerald-400 font-mono">oauth-mcp-proxy-debug-apk.zip</code> to the workflow summary.
+        </p>
+
+        <pre className="p-3.5 bg-slate-950 border border-slate-800 rounded-xl text-[11px] font-mono text-cyan-200 overflow-x-auto max-h-48 leading-relaxed">
+{`name: Build Android Debug APK
+on:
+  push: { branches: [main, master] }
+  workflow_dispatch:
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: 'temurin', java-version: '17', cache: 'gradle' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci || npm install
+      - run: npm run build
+      - run: npx cap sync android
+      - run: cd android && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oauth-mcp-proxy-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk`}
+        </pre>
+      </div>
+
       {/* Android Permissions & Manifest Highlights */}
       <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
         <h3 className="text-sm font-bold text-white flex items-center gap-2">
