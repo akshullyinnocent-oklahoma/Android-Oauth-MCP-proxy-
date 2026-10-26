@@ -339,10 +339,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '20', cache: 'npm' }
+        with: { node-version: '20' }
       - uses: actions/setup-java@v4
         with: { distribution: 'temurin', java-version: '17' }
-      - run: npm install
+      - run: npm install --legacy-peer-deps
       - run: npm run build
       - run: npx cap sync android
       - uses: gradle/actions/setup-gradle@v3
