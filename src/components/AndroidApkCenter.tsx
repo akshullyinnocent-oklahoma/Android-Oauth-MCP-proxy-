@@ -276,17 +276,16 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
-      - name: Set up Node.js 20
+      - name: Set up Node.js 22 (LTS)
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: '22'
       - name: Set up Java JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-      - run: npm install
+      - run: npm install --legacy-peer-deps
       - run: npm run build
       - name: Initialize Capacitor Android
         run: |
@@ -339,7 +338,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '20' }
+        with: { node-version: '22' }
       - uses: actions/setup-java@v4
         with: { distribution: 'temurin', java-version: '17' }
       - run: npm install --legacy-peer-deps
